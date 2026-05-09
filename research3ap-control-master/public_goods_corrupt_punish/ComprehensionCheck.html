@@ -1,0 +1,41 @@
+{{ extends "global/Page.html" }}
+{{ block title }}理解检查{{ endblock }}
+{{ block content }}
+
+<p>
+    为了确保你理解了本轮游戏规则，请回答以下问题。
+</p>
+
+{% for question in ordered_questions %}
+    {% if question == 'comprehension_q1' %}
+        {{ formfield 'comprehension_q1' }}
+    {% elif question == 'comprehension_q2' %}
+        {{ formfield 'comprehension_q2' }}
+    {% elif question == 'comprehension_q3' %}
+        {{ formfield 'comprehension_q3' }}
+    {% elif question == 'comprehension_q4' %}
+        {{ formfield 'comprehension_q4' }}
+    {% endif %}
+{% endfor %}
+
+<button class="otree-btn-next btn btn-primary" type="submit">下一步</button>
+
+{{ endblock }}
+
+{{ block styles }}
+<style>
+    .otree-title,
+    h1 {
+        visibility: hidden !important;
+    }
+
+    .otree-btn-next {
+        float: right !important;
+        margin-top: 20px !important;
+    }
+
+    .form-check {
+        margin-bottom: 6px;
+    }
+</style>
+{{ endblock }}
