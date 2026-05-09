@@ -24,18 +24,46 @@
 
 {{ block styles }}
 <style>
+    .page-header {
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
     .otree-title,
     h1 {
         visibility: hidden !important;
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .otree-body {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .card {
+        margin-top: 0 !important;
     }
 
     .otree-btn-next {
         float: right !important;
-        margin-top: 20px !important;
+        margin-top: 10px !important;
     }
 
     .form-check {
-        margin-bottom: 6px;
+        margin-bottom: 2px;
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 8px !important;
+    }
+
+    p {
+        margin-bottom: 10px !important;
     }
 </style>
 {{ endblock }}

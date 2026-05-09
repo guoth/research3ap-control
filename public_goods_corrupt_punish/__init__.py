@@ -1,4 +1,5 @@
 import random
+import time
 
 from otree.api import *
 
@@ -110,6 +111,9 @@ class Player(BasePlayer):
     reaction_time = models.FloatField(initial=0)
     estimate_reaction_time = models.FloatField(initial=0)
     page_load_time = models.FloatField(initial=0)
+    
+    questionnaire_start_time = models.FloatField(initial=0)
+    questionnaire_duration = models.FloatField(initial=0)
 
     emotion_state = models.IntegerField(
         label='此时你的情绪状态为：',
@@ -125,38 +129,38 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
 
-    major = models.StringField(label='1. 您的专业为：')
-    major_category = models.StringField(
-        label='2. 您的专业类别为：',
-        choices=['文科', '理科', '工科', '其他'],
+    major = models.StringField(label='您的专业为：')
+    major_category = models.IntegerField(
+        label='您的专业类别为：',
+        choices=[[1, '文科'], [2, '理科'], [3, '工科'], [4, '其他']],
         widget=widgets.RadioSelect,
     )
-    student_id = models.StringField(label='3. 您的学号为：')
-    gender = models.StringField(
-        label='4. 您的性别：',
-        choices=['男', '女'],
+    student_id = models.StringField(label='您的学号为：')
+    gender = models.IntegerField(
+        label='您的性别：',
+        choices=[[1, '男'], [2, '女']],
         widget=widgets.RadioSelect,
     )
-    age = models.IntegerField(label='5. 您的年龄为：')
-    education = models.StringField(
-        label='6. 您的学历：',
-        choices=['大学专科', '大学本科', '研究生及以上'],
+    age = models.IntegerField(label='您的年龄为：')
+    education = models.IntegerField(
+        label='您的学历：',
+        choices=[[1, '大学专科'], [2, '大学本科'], [3, '研究生及以上']],
         widget=widgets.RadioSelect,
     )
-    work_experience = models.StringField(
-        label='7. 您是否有工作经验：包括兼职、寒暑假工与实习',
-        choices=['是', '否'],
+    work_experience = models.IntegerField(
+        label='您是否有工作经验：包括兼职、寒暑假工与实习',
+        choices=[[1, '是'], [2, '否']],
         widget=widgets.RadioSelect,
     )
 
-    is_real_player = models.StringField(
+    is_real_player = models.IntegerField(
         label='1. 您认为此次游戏中的其他玩家是否为真人?',
-        choices=['是真人', '不是真人'],
+        choices=[[1, '是真人'], [2, '不是真人']],
         widget=widgets.RadioSelect,
     )
-    careful_completion_check = models.StringField(
+    careful_completion_check = models.IntegerField(
         label='2. 您是否有认真完成实验与问卷，此题选否',
-        choices=['是', '否'],
+        choices=[[1, '是'], [2, '否']],
         widget=widgets.RadioSelect,
     )
 
@@ -380,6 +384,15 @@ class QuestionnairePart1(Page):
     def is_displayed(player: Player):
         return player.round_number == 2
 
+    @staticmethod
+    def vars_for_template(player: Player):
+        if player.questionnaire_start_time == 0:
+            player.questionnaire_start_time = time.time()
+            
+        fields = QuestionnairePart1.form_fields.copy()
+        random.shuffle(fields)
+        return dict(ordered_fields=fields)
+
 
 class QuestionnairePart2(Page):
     form_model = 'player'
@@ -390,9 +403,9 @@ class QuestionnairePart2(Page):
         return player.round_number == 2
 
     @staticmethod
-    def error_message(player: Player, values):
-        if values.get('careful_completion_check') != '否':
-            return '本题为注意力检查题，请选择“否”。'
+    def before_next_page(player: Player, timeout_happened):
+        if player.questionnaire_start_time > 0:
+            player.questionnaire_duration = time.time() - player.questionnaire_start_time
 
 
 class Results(Page):
