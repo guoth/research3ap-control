@@ -6,7 +6,9 @@
     为了确保你理解了本轮游戏规则，请回答以下问题。
 </p>
 
+<div class="question-container">
 {% for question in ordered_questions %}
+    <div class="question-item">
     {% if question == 'comprehension_q1' %}
         {{ formfield 'comprehension_q1' }}
     {% elif question == 'comprehension_q2' %}
@@ -16,7 +18,9 @@
     {% elif question == 'comprehension_q4' %}
         {{ formfield 'comprehension_q4' }}
     {% endif %}
+    </div>
 {% endfor %}
+</div>
 
 <button class="otree-btn-next btn btn-primary" type="submit">下一步</button>
 
@@ -64,6 +68,16 @@
 
     p {
         margin-bottom: 10px !important;
+    }
+
+    .question-container {
+        counter-reset: qnum;
+    }
+    .question-item {
+        counter-increment: qnum;
+    }
+    .question-item label:first-of-type::before {
+        content: "（" counter(qnum) "）";
     }
 </style>
 {{ endblock }}

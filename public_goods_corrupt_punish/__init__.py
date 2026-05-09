@@ -52,7 +52,7 @@ class Player(BasePlayer):
     player_role = models.StringField()
 
     comprehension_q1 = models.IntegerField(
-        label='（1）公共池的倍率为多少？',
+        label='公共池的倍率为多少？',
         choices=[
             [1, 'A. 1'],
             [2, 'B. 2'],
@@ -62,7 +62,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     comprehension_q2 = models.IntegerField(
-        label='（2）每组中共有几个角色？',
+        label='每组中共有几个角色？',
         choices=[
             [1, 'A. 2'],
             [2, 'B. 3'],
@@ -72,7 +72,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     comprehension_q3 = models.IntegerField(
-        label='（3）E的1代币可以减少A、B、C或D的多少代币？',
+        label='E的1代币可以减少A、B、C或D的多少代币？',
         choices=[
             [1, 'A. 1'],
             [2, 'B. 2'],
@@ -82,7 +82,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     comprehension_q4 = models.IntegerField(
-        label='（4）如果E获得了A的分配，该E：',
+        label='如果E获得了A的分配，该E：',
         choices=[
             [1, 'A. 仍然可以惩罚A'],
             [2, 'B. 不能再惩罚A'],
@@ -129,26 +129,26 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
 
-    major = models.StringField(label='您的专业为：')
+    major = models.StringField(label='1. 您的专业为：')
     major_category = models.IntegerField(
-        label='您的专业类别为：',
+        label='2. 您的专业类别为：',
         choices=[[1, '文科'], [2, '理科'], [3, '工科'], [4, '其他']],
         widget=widgets.RadioSelect,
     )
-    student_id = models.StringField(label='您的学号为：')
+    student_id = models.StringField(label='3. 您的学号为：')
     gender = models.IntegerField(
-        label='您的性别：',
+        label='4. 您的性别：',
         choices=[[1, '男'], [2, '女']],
         widget=widgets.RadioSelect,
     )
-    age = models.IntegerField(label='您的年龄为：')
+    age = models.IntegerField(label='5. 您的年龄为：')
     education = models.IntegerField(
-        label='您的学历：',
+        label='6. 您的学历：',
         choices=[[1, '大学专科'], [2, '大学本科'], [3, '研究生及以上']],
         widget=widgets.RadioSelect,
     )
     work_experience = models.IntegerField(
-        label='您是否有工作经验：包括兼职、寒暑假工与实习',
+        label='7. 您是否有工作经验：包括兼职、寒暑假工与实习',
         choices=[[1, '是'], [2, '否']],
         widget=widgets.RadioSelect,
     )
@@ -388,10 +388,7 @@ class QuestionnairePart1(Page):
     def vars_for_template(player: Player):
         if player.questionnaire_start_time == 0:
             player.questionnaire_start_time = time.time()
-            
-        fields = QuestionnairePart1.form_fields.copy()
-        random.shuffle(fields)
-        return dict(ordered_fields=fields)
+        return dict()
 
 
 class QuestionnairePart2(Page):

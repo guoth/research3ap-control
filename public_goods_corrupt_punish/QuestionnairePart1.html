@@ -35,25 +35,7 @@
 <!-- 自定义字号略大一点点的标题 -->
 <h4 style="margin-bottom: 15px; font-weight: bold; font-size: 1.25rem;">问卷第一部分：基本信息</h4>
 
-    <style>
-        .question-container {
-            counter-reset: qnum;
-        }
-        .question-item {
-            counter-increment: qnum;
-        }
-        .question-item label:first-of-type::before {
-            content: counter(qnum) ". ";
-        }
-    </style>
-
-    <div class="question-container">
-        {% for field in ordered_fields %}
-            <div class="question-item">
-                {{ formfield field }}
-            </div>
-        {% endfor %}
-    </div>
+    {{ formfields }}
 
     <div style="margin-top: 15px;">
         <button class="otree-btn-next btn btn-primary" style="float: right;">下一页</button>
