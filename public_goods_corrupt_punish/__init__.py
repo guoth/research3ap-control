@@ -274,14 +274,15 @@ class ComprehensionCheck(Page):
                 wrong_questions.append(field_name)
 
         if wrong_questions:
-            player.comprehension_error_count += 1
-            display_map = {
-                'comprehension_q1': '第1题',
-                'comprehension_q2': '第2题',
-                'comprehension_q3': '第3题',
-                'comprehension_q4': '第4题',
-            }
-            wrong_labels = '、'.join(display_map[field] for field in wrong_questions)
+            player.comprehension_error_count += len(wrong_questions)
+            
+            # 获取当前页面的题目显示顺序
+            current_order = get_comprehension_question_order(player)
+            
+            # 根据题目在页面上的实际顺序（索引+1）来提示
+            wrong_indices = sorted(current_order.index(field) + 1 for field in wrong_questions)
+            wrong_labels = '、'.join(f'第{i}题' for i in wrong_indices)
+            
             return f'{wrong_labels}回答错误。请确认规则后重新作答，只有全部答对才能继续。'
 
 

@@ -58,7 +58,7 @@
     .question-item {
         counter-increment: qnum;
     }
-    .question-item label:first-of-type::before {
+    .question-item > div > label:first-child::before {
         content: "（" counter(qnum) "）";
     }
 </style>
