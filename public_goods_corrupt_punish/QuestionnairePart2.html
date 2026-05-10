@@ -4,16 +4,22 @@
 
 {{ block content }}
 <style>
-    /* 隐藏原本巨大的标题区域 */
-    .page-header { display: none; }
+    /* 保持顶部间距一致 */
+    .otree-title, h1 { visibility: hidden !important; }
     
+    /* 缩小表单项之间的间距以避免滚动 */
+    .mb-3 { margin-bottom: 8px !important; }
+    .form-group { margin-bottom: 8px !important; }
+
     /* 将单选项变成横向排列 */
     .form-check { 
         display: inline-block; 
         margin-right: 20px; 
+        margin-bottom: 0;
     }
     
     .form-label, label { 
+        margin-bottom: 2px !important; 
         font-size: 1rem; 
         font-weight: 500;
     }

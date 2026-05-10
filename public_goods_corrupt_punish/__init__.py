@@ -54,40 +54,40 @@ class Player(BasePlayer):
     comprehension_q1 = models.IntegerField(
         label='公共池的倍率为多少？',
         choices=[
-            [1, 'A. 1'],
-            [2, 'B. 2'],
-            [3, 'C. 3'],
-            [4, 'D. 4'],
+            [1, '1'],
+            [2, '2'],
+            [3, '3'],
+            [4, '4'],
         ],
         widget=widgets.RadioSelect,
     )
     comprehension_q2 = models.IntegerField(
         label='每组中共有几个角色？',
         choices=[
-            [1, 'A. 2'],
-            [2, 'B. 3'],
-            [3, 'C. 4'],
-            [4, 'D. 5'],
+            [1, '2'],
+            [2, '3'],
+            [3, '4'],
+            [4, '5'],
         ],
         widget=widgets.RadioSelect,
     )
     comprehension_q3 = models.IntegerField(
         label='E的1代币可以减少A、B、C或D的多少代币？',
         choices=[
-            [1, 'A. 1'],
-            [2, 'B. 2'],
-            [3, 'C. 3'],
-            [4, 'D. 4'],
+            [1, '1'],
+            [2, '2'],
+            [3, '3'],
+            [4, '4'],
         ],
         widget=widgets.RadioSelect,
     )
     comprehension_q4 = models.IntegerField(
         label='如果E获得了A的分配，该E：',
         choices=[
-            [1, 'A. 仍然可以惩罚A'],
-            [2, 'B. 不能再惩罚A'],
-            [3, 'C. 仍然可以惩罚所有人'],
-            [4, 'D. 惩罚权不受该分配影响'],
+            [1, '仍然可以惩罚A'],
+            [2, '不能再惩罚A'],
+            [3, '仍然可以惩罚所有人'],
+            [4, '惩罚权不受该分配影响'],
         ],
         widget=widgets.RadioSelect,
     )
@@ -177,15 +177,12 @@ def get_comprehension_question_order(player: Player):
     if player.round_number == 1:
         return COMPREHENSION_FIELDS
 
-    key = f'{COMPREHENSION_ORDER_KEY}_{player.round_number}'
-    stored_order = player.participant.vars.get(key)
-    if stored_order:
-        return stored_order
-
-    shuffled_order = COMPREHENSION_FIELDS.copy()
-    random.shuffle(shuffled_order)
-    player.participant.vars[key] = shuffled_order
-    return shuffled_order
+    return [
+        'comprehension_q2',
+        'comprehension_q1',
+        'comprehension_q4',
+        'comprehension_q3',
+    ]
 
 
 def creating_session(subsession: Subsession):
