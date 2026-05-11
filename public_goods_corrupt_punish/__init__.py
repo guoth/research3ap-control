@@ -95,6 +95,7 @@ class Player(BasePlayer):
 
     for i in range(21):
         locals()[f'estimate_actual_{i}'] = models.IntegerField(min=0, max=100)
+    for i in range(21):
         locals()[f'estimate_should_{i}'] = models.IntegerField(min=0, max=100)
     del i
 
